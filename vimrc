@@ -26,6 +26,22 @@ if v:version < 700
   finish
 endif
 
+"------------------------------------
+" Other plugins managed by
+" Plug
+"------------------------------------
+" " Specify a directory for plugins
+" " - For Neovim: ~/.local/share/nvim/plugged
+" " - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+Plug 'https://github.com/adelarsq/vim-matchit'
+Plug 'https://tpope.io/vim/surround.git'
+Plug 'https://github.com/victorze/foo.git'
+Plug 'https://github.com/nanotech/jellybeans.vim.git'
+
+call plug#end()
 
 "------------------------------------
 " Use MiscFixed for a gui vim
@@ -36,9 +52,14 @@ endif
 
 
 "------------------------------------
-" Use jellybeans color scheme
+" Use a color scheme
 "------------------------------------
 colorscheme jellybeans
+
+"syntax enable
+"set background=dark " hyper or abyss
+"set background=light " github
+"colorscheme hyper
 
 "------------------------------------
 " Highlight syntax for the filetype
@@ -195,17 +216,3 @@ nmap <F8> :NERDTreeToggle<CR>
 
 
 
-"------------------------------------
-" Other plugins managed by
-" Plug
-"------------------------------------
-" " Specify a directory for plugins
-" " - For Neovim: ~/.local/share/nvim/plugged
-" " - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
-
-" Make sure you use single quotes
-Plug 'https://github.com/adelarsq/vim-matchit'
-Plug 'https://tpope.io/vim/surround.git'
-
-call plug#end()
