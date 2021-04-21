@@ -1,6 +1,9 @@
 # RZ: -- Don't continue if non-interactive shell
 [ -z "$PS1" ] && return
 
+
+stty stop ''
+
 HISTCONTROL=ignoredups:ignorespace
 shopt -s histappend
 shopt -s checkwinsize
