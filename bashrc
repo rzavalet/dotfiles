@@ -10,23 +10,27 @@ shopt -s checkwinsize
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
-export PS1="{\[$(tput sgr0)\]\[\033[38;5;208m\]\$?\[$(tput sgr0)\]\[\033[38;5;15m\]} \[$(tput sgr0)\]\[\033[38;5;7m\]\d\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;229m\]\t\[$(tput sgr0)\]\[\033[38;5;15m\]\n\[$(tput sgr0)\]\[\033[38;5;118m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\[$(tput sgr0)\]\[\033[38;5;120m\]\h\[$(tput sgr0)\]\[\033[38;5;6m\][\[$(tput sgr0)\]\[\033[38;5;15m\]\w\[$(tput sgr0)\]\[\033[38;5;6m\]]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ \[$(tput sgr0)\]"
+#export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
+#export PS1="{\[$(tput sgr0)\]\[\033[38;5;208m\]\$?\[$(tput sgr0)\]\[\033[38;5;15m\]} \[$(tput sgr0)\]\[\033[38;5;7m\]\d\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;229m\]\t\[$(tput sgr0)\]\[\033[38;5;15m\]\n\[$(tput sgr0)\]\[\033[38;5;118m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\[$(tput sgr0)\]\[\033[38;5;120m\]\h\[$(tput sgr0)\]\[\033[38;5;6m\][\[$(tput sgr0)\]\[\033[38;5;15m\]\w\[$(tput sgr0)\]\[\033[38;5;6m\]]\[$(tput sgr0)\]\[\033[38;5;15m\]\\$ \[$(tput sgr0)\]"
 
 #export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33m\]\w\[\033[m\]\$ "
-export CLICOLOR=1
+#export CLICOLOR=1
 #export LSCOLORS=ExFxBxDxCxegedabagacad
 
 export TERM=xterm-256color
 export LANG=en_US.utf8
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+REPO_DIR=${HOME}/Repositories/dotfiles
+
+if [ -f ${REPO_DIR}/bash_aliases ]; then
+  source ${REPO_DIR}/bash_aliases
 fi
 
-
 # RZ: -- Vim is my default editor
-export EDITOR=vim
+export EDITOR=emacs
+
+export PATH=${PATH}:/home/rzavalet/opt/postgresql/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/home/rzavalet/opt/postgresql/lib:/home/rzavalet/opt/postgresql/share
 
 
 function beep()

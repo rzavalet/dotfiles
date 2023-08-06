@@ -1,6 +1,6 @@
 #!/bin/sh
 
-files="bashrc bash_aliases vimrc tmux.conf"
+files="bashrc bash_aliases vimrc gdbinit"
 BAKDIR=$HOME/backup_config_files
 
 for i in $files

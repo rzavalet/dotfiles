@@ -1,4 +1,59 @@
 "------------------------------------
+" Plugins managed by Plug
+"------------------------------------
+" " Specify a directory for plugins
+" " - For Neovim: ~/.local/share/nvim/plugged
+" " - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Explore directory tree
+Plug 'https://github.com/scrooloose/nerdtree'
+
+Plug 'https://github.com/aperezdc/vim-template.git'
+
+" Conversion between bases
+Plug 'https://github.com/glts/vim-magnum.git'
+Plug 'https://github.com/glts/vim-radical.git'
+
+" Nice status bar
+Plug 'https://github.com/vim-airline/vim-airline.git'
+Plug 'vim-airline/vim-airline-themes'
+
+" Call tree graph
+Plug 'https://github.com/vim-scripts/CCTree.git'
+
+" Cscope
+Plug 'https://github.com/vim-scripts/gtags.vim'
+Plug 'https://github.com/whatot/gtags-cscope.vim.git'
+
+" Surround with parenthesis, braces, etc.
+Plug 'https://github.com/tpope/vim-surround.git'
+"Plug 'https://tpope.io/vim/surround.git'
+
+" Fuzzy search
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" ALELint
+Plug 'dense-analysis/ale'
+
+" Jellybeans color theme
+Plug 'https://github.com/nanotech/jellybeans.vim'
+
+" Others that I've been told about, but I have never used
+"Plug 'https://github.com/tpope/vim-repeat.git'
+"Plug 'https://github.com/adelarsq/vim-matchit'
+
+call plug#end()
+"------------------------------------
+" End Plugins managed by Plug
+"------------------------------------
+
+
+
+
+
+"------------------------------------
 " Disable the default Vim startup message.
 "------------------------------------
 set shortmess+=I
@@ -69,11 +124,6 @@ set langmenu=en_US.UTF-8
 "set mouse=a
 
 "------------------------------------
-" Unbind some useless/annoying default key bindings.
-"------------------------------------
-nmap Q <Nop> " 'Q' in normal mode enters Ex mode. You almost never want this.
-
-"------------------------------------
 " Disable audible bell because it's annoying.
 "------------------------------------
 set noerrorbells visualbell t_vb=
@@ -84,14 +134,6 @@ set noerrorbells visualbell t_vb=
 "------------------------------------
 if v:version < 700
   finish
-endif
-
-
-"------------------------------------
-" Use MiscFixed for a gui vim
-"------------------------------------
-if has('gui_running')
-  set guifont=MiscFixed\ 9.5
 endif
 
 "------------------------------------
@@ -134,13 +176,37 @@ set cursorcolumn
 " 15 = white
 "------------------------------------
 if has("autocmd")
-autocmd ColorScheme * highlight StatusLine ctermfg=0 ctermbg=15 cterm=NONE
-autocmd ColorScheme * highlight StatusLineNC ctermfg=0 ctermbg=7 cterm=NONE
+  autocmd ColorScheme * highlight StatusLine ctermfg=0 ctermbg=15 cterm=NONE
+  autocmd ColorScheme * highlight StatusLineNC ctermfg=0 ctermbg=7 cterm=NONE
 endif
 "hi StatusLine ctermfg=0 ctermbg=15 cterm=NONE
 "hi StatusLineNC ctermfg=0 ctermbg=7 cterm=NONE
 
 
+"------------------------------------
+" This autocommand jumps to the last known position in a file
+" just after opening it, if the '" mark is set:
+"
+" If the mark is set (i.e. is in a line between the first and the
+" last), then go to the mark.
+"
+" BufReadPost: When starting to edit a new buffer, after
+" reading the file into the buffer, before
+" executing the modelines.
+"------------------------------------
+if has("autocmd")
+  autocmd BufReadPost   *     if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+
+
+
+
+
+"------------------------------------
+" Unbind some useless/annoying default key bindings.
+"------------------------------------
+nmap Q <Nop> " 'Q' in normal mode enters Ex mode. You almost never want this.
 
 "------------------------------------
 " Let's train ourselves
@@ -161,12 +227,15 @@ inoremap <Right> <ESC>:echoe "Use l"<CR>
 inoremap <Up>    <ESC>:echoe "Use k"<CR>
 inoremap <Down>  <ESC>:echoe "Use j"<CR>
 
-
-
+"------------------------------------
+" Enable/Disable cursor for {line,column}
+"------------------------------------
 nnoremap <Leader>c : set cursorline! cursorcolumn! <CR>
 nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
 
-
+"------------------------------------
+" Cscope mappings
+"------------------------------------
 nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
@@ -177,24 +246,6 @@ nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
-"nmap <C-@>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-@>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-@>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-@>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-@>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
-"nmap <C-@>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-"nmap <C-@>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
-
-"nmap <C-\>s :scs find s <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-\>g :scs find g <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-\>c :scs find c <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-\>t :scs find t <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-\>e :scs find e <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-\>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
-"nmap <C-\>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-"nmap <C-\>d :scs find d <C-R>=expand("<cword>")<CR><CR>
-
-
 "------------------------------------
 " Mappings for gtags. Taken from gtags.vim
 "------------------------------------
@@ -203,42 +254,10 @@ nmap <C-\><C-]> :GtagsCursor<CR>
 nmap <C-n> :cn<CR>
 nmap <C-p> :cp<CR>
 
-
 "------------------------------------
-" Some Doxygen settings
+" Vertical split current file
 "------------------------------------
-let g:C_UseTool_cmake   = 'yes'
-let g:C_UseTool_doxygen = 'yes'
-let g:DoxygenToolkit_briefTag_pre = "NAME:^M*    "
-let g:DoxygenToolkit_briefTag_post = " - ^M*^M* PARAMETERS:"
-let g:DoxygenToolkit_briefTag_funcName = "yes"
-let g:DoxygenToolkit_paramTag = "PARAMETERS:"
-let g:DoxygenToolkit_paramTag_pre = "   "
-let g:DoxygenToolkit_paramTag_post = "    (IN|OUT)  - "
-let g:DoxygenToolkit_returnTag = "DESCRIPTION:^M*    ^M* RETURNS:^M*^M* NOTES:^M* "
-let g:DoxygenToolkit_maxFunctionProtoLines = 20
-let g:DoxygenToolkit_keepEmptyLineAfterComment = "yes"
-let g:DoxygenToolkit_DescriptionTag = "DESCRIPTION:^M*    "
-let g:DoxygenToolkit_NotesTag = "NOTES:^M*    "
-let g:DoxygenToolkit_returnNothingTag ="    NOTHING"
-map ^X :DoxESC
-
-
-"------------------------------------
-" This autocommand jumps to the last known position in a file
-" just after opening it, if the '" mark is set:
-"
-" If the mark is set (i.e. is in a line between the first and the
-" last), then go to the mark.
-"
-" BufReadPost: When starting to edit a new buffer, after
-" reading the file into the buffer, before
-" executing the modelines.
-"------------------------------------
-if has("autocmd")
-  autocmd BufReadPost   *     if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
+nmap <C-\>v :sp <C-R>=expand("%p")<CR>
 
 "------------------------------------
 " Get the name of the function
@@ -263,43 +282,35 @@ nnoremap td  :tabclose<CR>
 nnoremap tn :tabnew<CR>
 
 
-"------------------------------------
-" Some nice mappings settings
-"------------------------------------
-nmap <C-\>v :sp <C-R>=expand("%p")<CR>
-
-nmap <F5> :TlistToggle<CR>
-nmap <F6> :set number!<CR>
-nmap <F7> :set ic!<CR>
-nmap <F8> :NERDTreeToggle<CR>
 
 
 "------------------------------------
-" Other plugins managed by
-" Plug
+" Some Doxygen settings
 "------------------------------------
-" " Specify a directory for plugins
-" " - For Neovim: ~/.local/share/nvim/plugged
-" " - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
+let g:C_UseTool_cmake   = 'yes'
+let g:C_UseTool_doxygen = 'yes'
+let g:DoxygenToolkit_briefTag_pre = "NAME:^M*    "
+let g:DoxygenToolkit_briefTag_post = " - ^M*^M* PARAMETERS:"
+let g:DoxygenToolkit_briefTag_funcName = "yes"
+let g:DoxygenToolkit_paramTag = "PARAMETERS:"
+let g:DoxygenToolkit_paramTag_pre = "   "
+let g:DoxygenToolkit_paramTag_post = "    (IN|OUT)  - "
+let g:DoxygenToolkit_returnTag = "DESCRIPTION:^M*    ^M* RETURNS:^M*^M* NOTES:^M* "
+let g:DoxygenToolkit_maxFunctionProtoLines = 20
+let g:DoxygenToolkit_keepEmptyLineAfterComment = "yes"
+let g:DoxygenToolkit_DescriptionTag = "DESCRIPTION:^M*    "
+let g:DoxygenToolkit_NotesTag = "NOTES:^M*    "
+let g:DoxygenToolkit_returnNothingTag ="    NOTHING"
+map ^X :DoxESC
 
-" Make sure you use single quotes
-"Plug 'https://github.com/adelarsq/vim-matchit'
-"Plug 'https://tpope.io/vim/surround.git'
-Plug 'https://github.com/scrooloose/nerdtree'
-Plug 'https://github.com/aperezdc/vim-template.git'
+"-----------------------------------
+" Airline customization
+"-----------------------------------
+let g:airline_powerline_fonts = 1
 
-" Conversion between bases
-Plug 'https://github.com/glts/vim-magnum.git'
-Plug 'https://github.com/glts/vim-radical.git'
+"-----------------------------------
+" Define some globals
+"-----------------------------------
+let g:email = 'rzavalet@noemail.com'
+let g:username = 'rzavalet'
 
-" Nice status bar
-Plug 'https://github.com/vim-airline/vim-airline.git'
-
-Plug 'https://github.com/vim-scripts/CCTree.git'
-"
-"Plug 'https://github.com/vim-scripts/gtags.vim'
-"Plug 'https://github.com/whatot/gtags-cscope.vim.git'
-"Plug 'https://github.com/tpope/vim-surround.git'
-"Plug 'https://github.com/tpope/vim-repeat.git'
-call plug#end()

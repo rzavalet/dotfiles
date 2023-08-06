@@ -18,13 +18,5 @@ alias terminal='gnome-terminal --disable-factory'
 
 alias p=pushd
 
-CSCOPE_VERSION=`vim -version 2>&1 | head -1 |  awk '{print $5}'`
-if [ "$CSCOPE_VERSION" == "7.4" ]
-then
-    alias cscope=/usr/local/bin/cscope
-else
-    alias cscope=/usr/bin/cscope 
-fi
-
 alias sessions='tmux list-session'
 alias attach='tmux attach-session -d -t'
