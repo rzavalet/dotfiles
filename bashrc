@@ -29,9 +29,6 @@ fi
 # RZ: -- Vim is my default editor
 export EDITOR=emacs
 
-export PATH=${PATH}:/home/rzavalet/opt/postgresql/bin
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/home/rzavalet/opt/postgresql/lib:/home/rzavalet/opt/postgresql/share
-
 
 function beep()
 {
