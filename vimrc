@@ -26,6 +26,9 @@ Plug 'https://github.com/vim-scripts/CCTree.git'
 Plug 'https://github.com/vim-scripts/gtags.vim'
 Plug 'https://github.com/whatot/gtags-cscope.vim.git'
 
+" Taglist
+Plug 'https://github.com/vim-scripts/taglist.vim'
+
 " Surround with parenthesis, braces, etc.
 Plug 'https://github.com/tpope/vim-surround.git'
 "Plug 'https://tpope.io/vim/surround.git'
@@ -39,6 +42,15 @@ Plug 'dense-analysis/ale'
 
 " Jellybeans color theme
 Plug 'https://github.com/nanotech/jellybeans.vim'
+Plug 'https://github.com/morhetz/gruvbox'
+
+Plug 'https://github.com/airblade/vim-gitgutter'
+Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/junegunn/gv.vim'
+
+" coc.nvim
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 
 " Others that I've been told about, but I have never used
 "Plug 'https://github.com/tpope/vim-repeat.git'
@@ -139,7 +151,8 @@ endif
 "------------------------------------
 " Use jellybeans color scheme
 "------------------------------------
-colorscheme jellybeans
+colorscheme gruvbox
+set background=dark
 
 "------------------------------------
 " Highlight syntax for the filetype
@@ -165,7 +178,7 @@ set cursorline
 "------------------------------------
 " Highlight the current line
 "------------------------------------
-set cursorcolumn
+"set cursorcolumn
 "autocmd ColorScheme * highlight CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 "highlight CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
@@ -314,3 +327,11 @@ let g:airline_powerline_fonts = 1
 let g:email = 'rzavalet@noemail.com'
 let g:username = 'rzavalet'
 
+
+"-----------------------------------
+" CoC customization
+"-----------------------------------
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
